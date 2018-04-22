@@ -23,7 +23,7 @@ sudo python quantumdetect.py -i [interface] -r [file] [filters]
 ```bash
 sudo apt install python
 sudo apt install python-pip
-pip install scap
+pip install scapy
 ```
 
 ## License
