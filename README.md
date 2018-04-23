@@ -11,6 +11,12 @@ Made for Dr. Sherif Kassas at the American University in Cairo
 
 ## Usage
 
+You can use the following to capture packets:
+```
+sudo tcpdump -w capture.pcap
+```
+
+You can use the following to use quantumdetect:
 ```
 sudo python quantumdetect.py -i [interface] -r [file] [filters]
         Either -i or -r should be used.

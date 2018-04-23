@@ -34,18 +34,17 @@ def packetSummary(pkts):
                 print(p.an.rrname)
 
 def handlePCAP(pcap):
+    print("Reading from " + pcap)
     packets = rdpcap(pcap)
-    handlePackets(packets)
+    packetSummary(packets)
 
 def sniffInterface(interface, filters):
     print("Sniffing from " + interface)
     p = []
     if (interface == "all"):
-        p = sniff(count = 10, filter = filters)
+        sniff(count = 10, filter = filters)
     else:
-        p = sniff(count = 10, filter = filters, iface = interface)
-    handlePackets(p)
-    print(p)
+        sniff(count = 10, filter = filters, iface = interface)
 
 def quantumHelp():
     print("Usage: sudo python quantumdetect.py -i [interface] -r [file] [filters]\n\tEither -i or -r should be used.\n\t[interface] can be all, which lists all packets from all interfaces.\n\t[file] is a .pcap file containing multiple packets.")
