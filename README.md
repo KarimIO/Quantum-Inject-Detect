@@ -11,7 +11,7 @@ Made for Dr. Sherif Kassas at the American University in Cairo
 
 ## Usage
 
-You can use the following to capture packets:
+You can use the following to capture packets. You will need to use `Ctrl + C` to stop the capture.
 ```
 sudo tcpdump -w capture.pcap
 ```

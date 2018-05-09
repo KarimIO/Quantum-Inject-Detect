@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 from scapy.all import *
 
@@ -21,30 +23,20 @@ def handleArgs(args):
 
     return interface, read_files, filter
 
-def handlePackets(pkts):
-    for p in pkts:
-        p.summary()
-
-def packetSummary(pkts):
-    for p in pkts:
-        # We're only interested packets with a DNS Round Robin layer
-        if p.haslayer(DNSRR):
-            # If the an(swer) is a DNSRR, print the name it replied with.
-            if isinstance(p.an, DNSRR):
-                print(p.an.rrname)
+def pkt_callback(pkt):
+    pkt.show()
 
 def handlePCAP(pcap):
     print("Reading from " + pcap)
-    packets = rdpcap(pcap)
-    packetSummary(packets)
+    sniff(count = 10, offline = pcap, prn = pkt_callback) # , store=0)
 
 def sniffInterface(interface, filters):
     print("Sniffing from " + interface)
     p = []
     if (interface == "all"):
-        sniff(count = 10, filter = filters)
+        sniff(count = 10, prn = pkt_callback, filter = filters)
     else:
-        sniff(count = 10, filter = filters, iface = interface)
+        sniff(count = 10, prn = pkt_callback, filter = filters, iface = interface)
 
 def quantumHelp():
     print("Usage: sudo python quantumdetect.py -i [interface] -r [file] [filters]\n\tEither -i or -r should be used.\n\t[interface] can be all, which lists all packets from all interfaces.\n\t[file] is a .pcap file containing multiple packets.")
