@@ -75,15 +75,15 @@ def main(argv):
 
     def printHelp():
         print """
-        quantuminject [­-i interface] [­-r regexp] [­-d datafile] expression
+        (python2.7 |./)quantuminject [­-i interface] [­-r regexp] [­-d datafile] expression
 
         -i --interface Listen on network device (e.g., eth0). If not specified, quantuminject should select a default interface to listen on. The same interface should be used for packet injection.
 
         ­-r --regex Use regular expression to match the request packets for which a response will be spoofed.
 
-        ­-d --data Read the python data that will be used as the TCP payload of the spoofed response packet from <datafile>
+        ­-d --data Read the python script that will generate the TCP payload of the spoofed response packet from <datafile>
 
-        expression is a packet filter
+        expression is a packet filter.
 
         Defaults will be used for anything not provided.
         """
