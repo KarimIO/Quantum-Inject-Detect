@@ -39,12 +39,8 @@ You can then stop the scripts by sending an interrupt using `Ctrl + C`.
 
 
 ## QuantumDetect
-You can use the following to capture packets. You will need to use `Ctrl + C` to stop the capture.
-```
-sudo tcpdump -w capture.pcap
-```
+QuantumDetect's invocation is as follows:
 
-You can use the following to use quantumdetect:
 ```
 sudo python quantumdetect.py -i [interface] -r [file] [filters]
         Either -i or -r should be used.
@@ -52,6 +48,12 @@ sudo python quantumdetect.py -i [interface] -r [file] [filters]
         [file] is a .pcap file containing multiple packets.
 ```
 
+You just provide the same interface as QuantumInject.
+
+You can also use the following to capture packets for later, though, like the scripts, you will need to use `Ctrl + C` to stop the capture.
+```
+sudo tcpdump -w capture.pcap
+```
 
 ## License
 The Unlicense. Check 'UNLICENSE'.
