@@ -38,10 +38,11 @@ def handle(packet):
         del spoofed_packet[IP].chksum
         del spoofed_packet[TCP].chksum
 
-        if not easy_mac_address:
-            spoofed_packet[Ether].src, spoofed_packet[Ether].dst = packet[Ether].dst, packet[Ether].src
-        else: # make IP spoofs easier to detect
-            spoofed_packet[Ether].src, spoofed_packet[Ether].dst = 'be:ef:ca:fe:ba:be', packet[Ether].src
+        if packet.haslayer(Ether):
+            if not easy_mac_address:
+                spoofed_packet[Ether].src, spoofed_packet[Ether].dst = packet[Ether].dst, packet[Ether].src
+            else: # make IP spoofs easier to detect
+                spoofed_packet[Ether].src, spoofed_packet[Ether].dst = 'be:ef:ca:fe:ba:be', packet[Ether].src
 
         spoofed_packet[IP].src, spoofed_packet[IP].dst = packet[IP].dst, packet[IP].src
         spoofed_packet[IP].flags = 'DF'
